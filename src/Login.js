@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useCallback, useContext } from "react";
+import { withRouter, Redirect } from "react-router";
+import app from "./base.js";
+import { AuthContext } from "./Auth.js";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -8,7 +11,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Logo from './DnDLogo.png';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -52,8 +54,30 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn() {
+const Login = ({ history }) => {
   const classes = useStyles();
+
+  const handleLogin = useCallback(
+    async event => {
+      event.preventDefault();
+      const { email, password } = event.target.elements;
+      try {
+        await app
+          .auth()
+          .signInWithEmailAndPassword(email.value, password.value);
+        history.push("/");
+      } catch (error) {
+        alert(error);
+      }
+    },
+    [history]
+  );
+
+  const { currentUser } = useContext(AuthContext);
+
+  if (currentUser) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -65,7 +89,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleLogin}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -74,6 +98,7 @@ export default function SignIn() {
             id="email"
             label="Email Address"
             name="email"
+            type = "email"
             autoComplete="email"
             autoFocus
           />
@@ -86,7 +111,7 @@ export default function SignIn() {
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
+            autoComplete="Password"
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -108,7 +133,7 @@ export default function SignIn() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="./signup" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
@@ -120,4 +145,6 @@ export default function SignIn() {
       </Box>
     </Container>
   );
-}
+};
+
+export default withRouter(Login);
