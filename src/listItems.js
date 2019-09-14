@@ -4,20 +4,22 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
-import AssignmentIcon from '@material-ui/icons/Assignment';
+import HostIcon from '@material-ui/icons/People';
 
 export const mainListItems = (
   <div>
+    <ListSubheader inset> Session Options </ListSubheader>
     <ListItem button>
       <ListItemIcon>
-        <DashboardIcon />
+        <HostIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemText primary="Host Session" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <HostIcon />
+      </ListItemIcon>
+      <ListItemText primary="Join Session" />
     </ListItem>
   </div>
 );
@@ -27,7 +29,7 @@ export const secondaryListItems = (
     <ListSubheader inset> Account Options </ListSubheader>
     <ListItem button onClick={() => app.auth().signOut()}>
       <ListItemIcon>
-        <PeopleIcon />
+        <HostIcon />
       </ListItemIcon>
       <ListItemText primary = "Sign out" />
     </ListItem>

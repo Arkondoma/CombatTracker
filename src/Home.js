@@ -19,8 +19,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
-import Chart from './Chart';
-import Deposits from './Deposits';
 import Orders from './Orders';
 
 function Copyright() {
@@ -145,11 +143,6 @@ const Home = () => {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -173,19 +166,7 @@ const Home = () => {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
+            {/* Character List */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <Orders />
@@ -193,7 +174,6 @@ const Home = () => {
             </Grid>
           </Grid>
         </Container>
-        <button onClick={() => app.auth().signOut()}>Sign out</button>
         <Copyright />
       </main>
     </div>
