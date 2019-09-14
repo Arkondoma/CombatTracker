@@ -1,4 +1,5 @@
 import React from "react";
+import app from "./base";
 import Copyright from './Copyright.js';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -6,12 +7,15 @@ import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Orders from './Orders';
+import Characters from './Characters';
+import Logo from './assets/LogoWithText.png';
+import HostIcon from '@material-ui/icons/People';
+import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
 import { mainListItems, secondaryListItems } from './listItems';
 
 const drawerWidth = 240;
@@ -21,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
   },
   toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
+
   },
   toolbarIcon: {
     display: 'flex',
@@ -31,6 +35,7 @@ const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar,
   },
   appBar: {
+    background: '#800000',
     zIndex:  theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -39,6 +44,11 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
+  },
+  grid: {
+    direction: 'row',
+    alignItems: 'left',
+    VerticalAlign: 'text-bottom',
   },
   drawerPaper: {
     position: 'relative',
@@ -78,9 +88,18 @@ const Home = () => {
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h5" noWrap>
-            Welcome
-          </Typography>
+            <Link color="primary" href="/">
+              <img src ={Logo} alt = "Somebody yell at Nick" height = "60"/>
+            </Link>
+          <Container align="right">
+            <Button
+            variant="outlined"
+            color="inherit"
+            onClick={() => app.auth().signOut()}
+            >
+              <HostIcon /> &nbsp; Sign Out
+            </Button>
+          </Container>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -94,7 +113,6 @@ const Home = () => {
         <Divider />
         <List>{mainListItems}</List>
         <Divider />
-        <List>{secondaryListItems}</List>
       </Drawer>
       <main className = {classes.content}>
         <div className = {classes.appBarSpacer} />
@@ -103,7 +121,7 @@ const Home = () => {
             {/* Character List */}
             <Grid item xs = {12}>
               <Paper className = {classes.paper}>
-                <Orders />
+                <Characters />
               </Paper>
             </Grid>
           </Grid>

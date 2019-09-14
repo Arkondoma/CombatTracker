@@ -6,6 +6,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import { AuthProvider } from "./Auth";
 import PrivateRoute from "./PrivateRoute";
+import CharacterEditor from "./CharacterEditor";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <PrivateRoute exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/CharacterEditor" component={CharacterEditor} />
         </div>
       </Router>
     </AuthProvider>

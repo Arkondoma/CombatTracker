@@ -11,8 +11,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 
 // Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
+function createData(id, name, c_class, level, hp) {
+  return { id, name, c_class, level, hp };
 }
 
 const rows = [
@@ -43,16 +43,16 @@ export default function Orders() {
         <TableBody>
           {rows.map(row => (
             <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
               <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
+              <TableCell>{row.c_class}</TableCell>
+              <TableCell>{row.level}</TableCell>
+              <TableCell>{row.hp}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
       <div className={classes.seeMore}>
-        <Link color="primary" href="javascript:;">
+        <Link color="primary" href="./charactereditor">
           Add new character
         </Link>
       </div>
