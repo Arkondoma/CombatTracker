@@ -80,10 +80,9 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-const CharacterEditor = () => {
+const CharacterEditor = ({ history }) => {
     const classes = useStyles();
 
-    //function UpdateCharacter() {};
     const UpdateCharacter = useCallback(async event => {
       event.preventDefault();
       const { name, c_class, level, hp, 
@@ -108,10 +107,12 @@ const CharacterEditor = () => {
           ac: ac.value,
           perc: perception.value
         })
+        history.push("/");
       } catch(error) {
         alert(error);
       }
-    });
+    }, [history]
+    );
 
     return (
       <div className={classes.root}>

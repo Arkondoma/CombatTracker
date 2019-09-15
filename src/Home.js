@@ -16,7 +16,7 @@ import Logo from './assets/LogoWithText.png';
 import HostIcon from '@material-ui/icons/People';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainListItems } from './listItems';
 
 const drawerWidth = 240;
 
