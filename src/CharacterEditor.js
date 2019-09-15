@@ -15,6 +15,10 @@ import Link from '@material-ui/core/Link';
 import TextField from '@material-ui/core/TextField';
 
 const drawerWidth = 240;
+const firebase = require("firebase");
+require("firebase/firestore");
+
+var database = firebase.firestore();
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -79,9 +83,35 @@ const useStyles = makeStyles(theme => ({
 const CharacterEditor = () => {
     const classes = useStyles();
 
-    const UpdateCharacter = useCallback(
-        
-    );
+    //function UpdateCharacter() {};
+    const UpdateCharacter = useCallback(async event => {
+      event.preventDefault();
+      const { name, c_class, level, hp, 
+              strength, dexterity, constitution, intelligence, wisdom, charisma, 
+              initmod, ac, perception } = event.target.elements;
+      try {
+        await app.auth()   
+        const userId = app.auth().currentUser.uid;     
+        database.collection("characters").add({
+          userId: userId,
+          name: name.value,
+          c_class: c_class.value,
+          level: level.value,
+          hp: hp.value,
+          str: strength.value,
+          dex: dexterity.value,
+          con: constitution.value,
+          int: intelligence.value,
+          wis: wisdom.value,
+          cha: charisma.value,
+          initmod: initmod.value,
+          ac: ac.value,
+          perc: perception.value
+        })
+      } catch(error) {
+        alert(error);
+      }
+    });
 
     return (
       <div className={classes.root}>
@@ -167,7 +197,7 @@ const CharacterEditor = () => {
                     </Grid>
                   </Grid>
                   <Grid container spacing={3} direction="row" justify="flex-start">
-                    <Grid item xs={6} sm={2}>
+                    <Grid item xs={6} sm={1}>
                       <TextField
                         variant="outlined"
                         margin="normal"
@@ -179,7 +209,7 @@ const CharacterEditor = () => {
                         autoComplete="10"
                       />
                     </Grid>
-                    <Grid item xs={6} sm={2}>
+                    <Grid item xs={6} sm={1}>
                       <TextField
                         variant="outlined"
                         margin="normal"
@@ -191,7 +221,7 @@ const CharacterEditor = () => {
                         autoComplete="10"
                       />
                     </Grid>
-                    <Grid item xs={6} sm={2}>
+                    <Grid item xs={6} sm={1}>
                       <TextField
                         variant="outlined"
                         margin="normal"
@@ -203,9 +233,7 @@ const CharacterEditor = () => {
                         autoComplete="10"
                       />
                     </Grid>
-                  </Grid>
-                  <Grid container spacing={3} direction="row" justify="flex-start">  
-                    <Grid item xs={6} sm={2}>
+                    <Grid item xs={6} sm={1}>
                       <TextField
                         variant="outlined"
                         margin="normal"
@@ -217,7 +245,7 @@ const CharacterEditor = () => {
                         autoComplete="10"
                       />
                     </Grid>
-                    <Grid item xs={6} sm={2}>
+                    <Grid item xs={6} sm={1}>
                       <TextField
                         variant="outlined"
                         margin="normal"
@@ -229,7 +257,7 @@ const CharacterEditor = () => {
                         autoComplete="10"
                       />
                     </Grid>
-                    <Grid item xs={6} sm={2}>
+                    <Grid item xs={6} sm={1}>
                       <TextField
                         variant="outlined"
                         margin="normal"
@@ -255,28 +283,52 @@ const CharacterEditor = () => {
                         autoComplete="10"
                       />
                     </Grid>
+                    <Grid item xs={6} sm={2}>
+                      <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        id="ac"
+                        label="AC"
+                        name="ac"
+                        type = "number"
+                        autoComplete="10"
+                      />
+                    </Grid>
+                    <Grid item xs={6} sm={2}>
+                      <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        id="perception"
+                        label="Passive Perception"
+                        name="perception"
+                        type = "number"
+                        autoComplete="10"
+                      />
+                    </Grid>
                   </Grid>
                   <Grid container spacing={3} direction="row" justify="flex-start">
-                    <Grid item item xs={6} sm={2}>
-                    <Button
-                      type="submit"
-                      variant="outlined"
-                      fullWidth
-                      color="default"
-                      className={classes.submit}
-                    >
-                      Save Character
-                    </Button>
+                    <Grid item xs={6} sm={2}>
+                      <Button
+                        type="submit"
+                        variant="outlined"
+                        fullWidth
+                        color="default"
+                        className={classes.submit}
+                      >
+                        Save Character
+                      </Button>
                     </Grid>
-                    <Grid item item xs={6} sm={2}>
-                    <Button
-                      type="button"
-                      variant="outlined"
-                      color="default"
-                      className={classes.submit}
-                    >
-                      Cancel
-                    </Button>
+                    <Grid item xs={6} sm={2}>
+                      <Button
+                        type="button"
+                        variant="outlined"
+                        color="default"
+                        className={classes.submit}
+                      >
+                        Cancel
+                      </Button>
                     </Grid>
                   </Grid>
                 </form>

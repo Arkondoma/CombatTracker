@@ -1,6 +1,8 @@
 import * as firebase from "firebase/app";
 import "firebase/auth";
 
+require("firebase/firestore");
+
 const app = firebase.initializeApp({
     apiKey: "AIzaSyBAtTeHwgsj-rzYOInzzWcFSujIMmJbjT8",
     authDomain: "combattracker-280a4.firebaseapp.com",
