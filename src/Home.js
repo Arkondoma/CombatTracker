@@ -17,71 +17,55 @@ import HostIcon from '@material-ui/icons/People';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import { mainListItems } from './listItems';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Title from './Title';
+import useStyles from './Theme';
 
-const drawerWidth = 240;
+const firebase = require("firebase");
+require("firebase/firestore");
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-  },
-  toolbar: {
+var database = firebase.firestore();
 
-  },
-  toolbarIcon: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
-  },
-  appBar: {
-    background: '#800000',
-    zIndex:  theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  title: {
-    flexGrow: 1,
-  },
-  grid: {
-    direction: 'row',
-    alignItems: 'left',
-    VerticalAlign: 'text-bottom',
-  },
-  drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-  },
-  fixedHeight: {
-    height: 240,
-  },
-}));
+var oldRows = [
+  createData(0, 'Aegwyn', 'Ranger', 15, 150),
+  createData(1, 'Ghost', 'Shaman', 15, 150),
+];
+
+// Generate Order Data
+function createData(id, name, c_class, level, hp) {
+  return { id, name, c_class, level, hp };
+}
+
+// Read characters from database
+async function loadCharacters() {
+  const snapshot = await database.collection('characters').get();
+  const chars = snapshot.docs.map(doc => doc.data());
+  const uid = app.auth().currentUser.uid;
+  var i = 0;
+  var rows = [];
+
+  try {
+    chars.forEach(doc => {
+      if (doc.userId === uid)
+      {
+        rows.push(createData(i++, doc.name, doc.c_class, doc.level, doc.hp));
+        console.log(rows[i-1]);
+      }
+    });
+    return rows;
+  } catch(error) {
+    alert(error);
+  }
+} 
 
 function Home() {
   const classes = useStyles();
+  const rows = Array.from(loadCharacters());
+  console.log(rows);
 
   return (
     <div className={classes.root}>
@@ -121,7 +105,32 @@ function Home() {
             {/* Character List */}
             <Grid item xs = {12}>
               <Paper className = {classes.paper}>
-                <Characters />
+              <Title>Characters</Title>
+                <Table size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Class</TableCell>
+                      <TableCell>Level</TableCell>
+                      <TableCell>Hit Points</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {rows.map(row => (
+                      <TableRow key={row.id}>
+                        <TableCell>{row.name}</TableCell>
+                        <TableCell>{row.c_class}</TableCell>
+                        <TableCell>{row.level}</TableCell>
+                        <TableCell>{row.hp}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                <div className={classes.seeMore}>
+                  <Link color="primary" href="./charactereditor">
+                    Add new character
+                  </Link>
+                </div>
               </Paper>
             </Grid>
           </Grid>
