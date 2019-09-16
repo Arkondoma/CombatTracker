@@ -1,7 +1,6 @@
 import React from "react";
 import app from "./base";
 import Copyright from './Copyright.js';
-import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -11,7 +10,6 @@ import Divider from '@material-ui/core/Divider';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Characters from './Characters';
 import Logo from './assets/LogoWithText.png';
 import HostIcon from '@material-ui/icons/People';
 import Button from '@material-ui/core/Button';
@@ -62,10 +60,9 @@ async function loadCharacters() {
   }
 } 
 
-function Home() {
+function CharacterList(props) {
   const classes = useStyles();
-  const rows = Array.from(loadCharacters());
-  console.log(rows);
+  console.log("Loading: ", props.characters);
 
   return (
     <div className={classes.root}>
@@ -116,7 +113,7 @@ function Home() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {rows.map(row => (
+                    {Array.from(props.characters).map(row => (
                       <TableRow key={row.id}>
                         <TableCell>{row.name}</TableCell>
                         <TableCell>{row.c_class}</TableCell>
@@ -139,6 +136,38 @@ function Home() {
       </main>
     </div>
   );
+}
+
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true,
+      characters: [],
+    };
+  }
+
+  componentDidMount() {
+    loadCharacters().then((response) => {
+      this.setState({
+        loading: false,
+        characters: response
+      });
+    });
+  }
+
+  render() {
+    if (this.state.loading) {
+      return (
+        <div> </div>
+      );
+    }
+    return (
+      <div>
+        <CharacterList characters={this.state.characters}/>
+      </div>
+    );
+  }
 };
 
 export default Home;
