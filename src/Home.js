@@ -25,13 +25,7 @@ import useStyles from './Theme';
 
 const firebase = require("firebase");
 require("firebase/firestore");
-
 var database = firebase.firestore();
-
-var oldRows = [
-  createData(0, 'Aegwyn', 'Ranger', 15, 150),
-  createData(1, 'Ghost', 'Shaman', 15, 150),
-];
 
 // Generate Order Data
 function createData(id, name, c_class, level, hp) {
