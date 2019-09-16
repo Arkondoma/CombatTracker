@@ -8,7 +8,7 @@ import { AuthProvider } from "./Auth";
 import PrivateRoute from "./PrivateRoute";
 import CharacterEditor from "./CharacterEditor";
 
-function App() {
+const App = () => {
   return (
     <AuthProvider>
       <Router>
