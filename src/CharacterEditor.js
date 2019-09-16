@@ -80,7 +80,7 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-const CharacterEditor = ({ history }) => {
+function CharacterEditor({ history }) {
     const classes = useStyles();
 
     const UpdateCharacter = useCallback(async event => {

@@ -80,7 +80,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Home = () => {
+function Home() {
   const classes = useStyles();
 
   return (

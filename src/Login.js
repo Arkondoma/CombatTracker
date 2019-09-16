@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Login = ({ history }) => {
+function Login({ history }) {
   const classes = useStyles();
 
   const handleLogin = useCallback(

@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SignUp = ({ history }) => {
+function SignUp({ history }) {
   const classes = useStyles();
 
   const handleSignUp = useCallback(async event => {
