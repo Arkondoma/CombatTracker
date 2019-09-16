@@ -68,6 +68,7 @@ function CharacterEditor({ history }) {
             variant="outlined"
             color="inherit"
             onClick={() => app.auth().signOut()}
+            href = "/login"
             >
               <HostIcon /> &nbsp; Sign Out
             </Button>
