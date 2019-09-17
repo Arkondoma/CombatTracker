@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { loadCharacters, CharacterList } from './FunctionalComponents';
+import { AuthContext } from "./Auth.js";
+import { Redirect } from "react-router";
 
 class Home extends React.Component {
   constructor(props) {

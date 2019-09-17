@@ -15,7 +15,7 @@ import HostIcon from '@material-ui/icons/People';
 import EditIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom';
 import { mainListItems } from './listItems';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -144,7 +144,7 @@ function CharacterList(props) {
                   </TableBody>
                 </Table>
                 <div className={classes.seeMore}>
-                  <Link color="primary" href="./charactereditor">
+                  <Link color="primary" to="./newcharacter">
                     Add new character
                   </Link>
                 </div>
@@ -161,7 +161,7 @@ function CharacterList(props) {
 function CharacterEdit({ history }) {
     const classes = useStyles();
 
-    const UpdateCharacter = useCallback(async event => {
+    const AddCharacter = useCallback(async event => {
       event.preventDefault();
       const { name, c_class, level, hp, 
               strength, dexterity, constitution, intelligence, wisdom, charisma, 
@@ -185,7 +185,7 @@ function CharacterEdit({ history }) {
           ac: ac.value,
           perc: perception.value
         })
-        history.push("/");
+        history.push("/home");
       } catch(error) {
         alert(error);
       }
@@ -218,7 +218,7 @@ function CharacterEdit({ history }) {
           <div className = {classes.appBarSpacer} />
             <Container maxWidth = "lg" className = {classes.container}>
               <Paper className = {classes.paper}>
-                <form className={classes.form} noValidate onSubmit={UpdateCharacter}>
+                <form className={classes.form} noValidate onSubmit={AddCharacter}>
                   <Grid container spacing={3} direction="row" justify="flex-start">
                     <Grid item xs={6}>
                       <TextField
@@ -402,7 +402,7 @@ function CharacterEdit({ history }) {
                     </Grid>
                     <Grid item xs={6} sm={2}>
                       <Button
-                        href= "/"
+                        href= "/home"
                         type="button"
                         variant="outlined"
                         color="default"

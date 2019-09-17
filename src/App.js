@@ -1,26 +1,32 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link, Redirect } from "react-router-dom";
+import { AuthProvider } from "./Auth";
 import Home from "./Home";
 import Login from "./Login";
 import SignUp from "./SignUp";
-import { AuthProvider } from "./Auth";
 import PrivateRoute from "./PrivateRoute";
-import CharacterEditor from "./CharacterEditor";
+import EditCharacter from "./EditCharacter";
+import NewCharacter from "./CharacterEditor";
 
-const App = () => {
-  return (
-    <AuthProvider>
-      <Router>
-        <div>
-          <PrivateRoute exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/CharacterEditor" component={CharacterEditor} />
-        </div>
-      </Router>
-    </AuthProvider>
-  );
-};
+class App extends React.Component {
+  render()
+  {
+    return (
+      <AuthProvider>
+        <Router>
+          <div>
+            <Redirect from="/" to="login" />
+            <PrivateRoute path="/home" component = {Home} />
+            <PrivateRoute path="/editcharacter" component = {EditCharacter} />
+            <PrivateRoute path="/newcharacter" component = {NewCharacter} />
+            <Route path="/login" component = {Login} />
+            <Route path="/signup" component = {SignUp} />
+          </div>
+        </Router>
+      </AuthProvider>
+    );
+  }
+}
 
 export default App;
