@@ -1,5 +1,5 @@
 import React from "react";
-import { CharacterEdit } from './FunctionalComponents';
+import { NewCharacter } from './FunctionalComponents';
 
 class CharacterEditor extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class CharacterEditor extends React.Component {
     }
     return (
       <div>
-        <CharacterEdit history = {this.state.history}/>
+        <NewCharacter history = {this.state.history}/>
       </div>
     )
   }

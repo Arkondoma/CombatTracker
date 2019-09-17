@@ -1,4 +1,5 @@
 import React, {useCallback } from "react";
+import { Redirect } from "react-router-dom";
 import app from "./base";
 import Copyright from './Copyright.js';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -50,7 +51,7 @@ async function loadCharacters() {
       if (doc.userId === uid)
       {
         rows.push(createData(docs[i++], doc.name, doc.c_class, doc.level, doc.hp));
-        console.log(rows[i - 1]);
+        console.log("Reading from database: ", rows[i - 1]);
       }
     });
     return rows;
@@ -68,16 +69,21 @@ async function HandleDelete(doc) {
     }
   }
 
+async function HandleEdit(doc) {
+    const TargetID = React.createContext(doc);
+    console.log("Editing document: ", TargetID._currentValue);
+}
+
 function CharacterList(props) {
   const classes = useStyles();
-  console.log("Loading: ", props.characters);
+  console.log("Tabled character data: ", props.characters);
 
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-            <Link color="primary" href="/">
+            <Link color="primary" to="/home">
               <img src ={Logo} alt = "Somebody yell at Nick" height = "60"/>
             </Link>
           <Container align="right">
@@ -130,11 +136,12 @@ function CharacterList(props) {
                         <TableCell>{row.level}</TableCell>
                         <TableCell>{row.hp}</TableCell>
                         <TableCell align='right'>
-                          <IconButton>
-                            <EditIcon/>
-                          </IconButton> 
+                          <Link to = "./editcharacter">
+                            <IconButton onClick={() => HandleEdit(row.id)}>
+                              <EditIcon/>
+                            </IconButton> 
+                          </Link>
                           &nbsp;
-                          {console.log("id: ", row.id)} 
                           <IconButton onClick={() => HandleDelete(row.id)}>
                             <DeleteIcon color="error"/>
                           </IconButton> 
@@ -144,7 +151,7 @@ function CharacterList(props) {
                   </TableBody>
                 </Table>
                 <div className={classes.seeMore}>
-                  <Link color="primary" to="./newcharacter">
+                  <Link color="primary" visited="primary" to="./newcharacter">
                     Add new character
                   </Link>
                 </div>
@@ -158,7 +165,7 @@ function CharacterList(props) {
   );
 }
 
-function CharacterEdit({ history }) {
+function NewCharacter({ history }) {
     const classes = useStyles();
 
     const AddCharacter = useCallback(async event => {
@@ -198,7 +205,7 @@ function CharacterEdit({ history }) {
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
           <Container>
-            <Link color="primary" href="/">
+            <Link color="primary" to="/home">
               <img src ={Logo} alt = "Somebody yell at Nick" height = "60"/>
             </Link>
           </Container>
@@ -421,4 +428,4 @@ function CharacterEdit({ history }) {
     );
 };
 
-export { loadCharacters, CharacterList, CharacterEdit };
+export { loadCharacters, CharacterList, NewCharacter };

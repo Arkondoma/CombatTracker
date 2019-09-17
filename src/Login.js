@@ -71,9 +71,9 @@ function Login({ history }) {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar class = "bigAvatar">
+        <div>
           <img src ={Logo} alt = "Somebody yell at Nick" height = "120" width = "120"/>
-        </Avatar>
+        </div>
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
