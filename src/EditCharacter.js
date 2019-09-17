@@ -7,7 +7,7 @@ class CharacterEditor extends React.Component {
     this.state = {
       loading: false,
       history: props.history,
-      documentId: props.docId,
+      documentId: this.props.match.params.character,
     };
   }
 

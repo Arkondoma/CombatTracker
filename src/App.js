@@ -26,8 +26,8 @@ class App extends React.Component {
             <Redirect from="/" to="/login" />
             <Redirect from="" to="/login" />
             <PrivateRoute path="/home" component = {Home} />
-            <PrivateRoute path="/editcharacter" component = {EditCharacter} />
             <PrivateRoute path="/newcharacter" component = {NewCharacter} />
+            <PrivateRoute path="/character/:character" component = {EditCharacter} />
             <Route path="/login" component = {Login} />
             <Route path="/signup" component = {SignUp} />
           </div>

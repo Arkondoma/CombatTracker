@@ -1,4 +1,4 @@
-import React, {useCallback } from "react";
+import React, {useCallback, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import app from "./base";
 import Copyright from './Copyright.js';
@@ -69,11 +69,6 @@ async function HandleDelete(doc) {
     }
   }
 
-async function HandleEdit(doc) {
-    const TargetID = React.createContext(doc);
-    console.log("Editing document: ", TargetID._currentValue);
-}
-
 function CharacterList(props) {
   const classes = useStyles();
   console.log("Tabled character data: ", props.characters);
@@ -136,8 +131,8 @@ function CharacterList(props) {
                         <TableCell>{row.level}</TableCell>
                         <TableCell>{row.hp}</TableCell>
                         <TableCell align='right'>
-                          <Link to = "./editcharacter">
-                            <IconButton onClick={() => HandleEdit(row.id)}>
+                          <Link to = {'/character/' + row.id}>
+                            <IconButton>
                               <EditIcon/>
                             </IconButton> 
                           </Link>
@@ -151,7 +146,7 @@ function CharacterList(props) {
                   </TableBody>
                 </Table>
                 <div className={classes.seeMore}>
-                  <Link color="primary" visited="primary" to="./newcharacter">
+                  <Link color="primary" visited="primary" to="/newcharacter">
                     Add new character
                   </Link>
                 </div>
@@ -427,5 +422,16 @@ function NewCharacter({ history }) {
       </div>
     );
 };
+
+async function loadCharacter(character) {
+    const snapshot = await database.collection('characters').get(character);
+
+}
+
+function EditCharacter({ history }) {
+    const classes = useStyles();
+
+    
+}
 
 export { loadCharacters, CharacterList, NewCharacter };
