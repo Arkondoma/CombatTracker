@@ -424,14 +424,277 @@ function NewCharacter({ history }) {
 };
 
 async function loadCharacter(character) {
-    const snapshot = await database.collection('characters').get(character);
-
+    let snapshot = database.collection('characters').doc(character);
+    let char = await snapshot.get();
+    try {
+        console.log("Loading: ", char.data())
+        return char.data();
+    } catch(error) {
+        console.log(error);
+    }
 }
 
-function EditCharacter({ history }) {
+function EditCharacter({ history, chardata }) {
     const classes = useStyles();
 
-    
+    const UpdateCharacter = useCallback(async event => {
+        event.preventDefault();
+        const { name, c_class, level, hp, 
+                strength, dexterity, constitution, intelligence, wisdom, charisma, 
+                initmod, ac, perception } = event.target.elements;
+        try {
+          await app.auth()   
+          const userId = app.auth().currentUser.uid;     
+          database.collection("characters").add({
+            userId: userId,
+            name: name.value,
+            c_class: c_class.value,
+            level: level.value,
+            hp: hp.value,
+            str: strength.value,
+            dex: dexterity.value,
+            con: constitution.value,
+            int: intelligence.value,
+            wis: wisdom.value,
+            cha: charisma.value,
+            initmod: initmod.value,
+            ac: ac.value,
+            perc: perception.value
+          })
+          history.push("/home");
+        } catch(error) {
+          alert(error);
+        }
+      }, [history]
+      );
+
+    return (
+        <div className={classes.root}>
+          <CssBaseline />
+          <AppBar position="fixed" className={classes.appBar}>
+            <Toolbar>
+            <Container>
+              <Link color="primary" to="/home">
+                <img src ={Logo} alt = "Somebody yell at Nick" height = "60"/>
+              </Link>
+            </Container>
+            <Container align="right">
+              <Button
+              variant="outlined"
+              color="inherit"
+              onClick={() => app.auth().signOut()}
+              href = "/login"
+              >
+                <HostIcon /> &nbsp; Sign Out
+              </Button>
+            </Container>
+            </Toolbar>
+          </AppBar>
+          <main className = {classes.content}>
+            <div className = {classes.appBarSpacer} />
+              <Container maxWidth = "lg" className = {classes.container}>
+                <Paper className = {classes.paper}>
+                  <form className={classes.form} noValidate onSubmit={UpdateCharacter}>
+                    <Grid container spacing={3} direction="row" justify="flex-start">
+                      <Grid item xs={6}>
+                        <TextField
+                          variant="outlined"
+                          margin="normal"
+                          required
+                          fullWidth
+                          id="name"
+                          label="Character Name"
+                          name="name"
+                          type = "text"
+                          defaultValue = {chardata.name}
+                          autoFocus
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid container spacing={3} direction="row" justify="flex-start">
+                      <Grid item xs={2}>
+                        <TextField
+                          variant="outlined"
+                          margin="normal"
+                          required
+                          fullWidth
+                          id="c_class"
+                          label="Class"
+                          name="c_class"
+                          type = "text"
+                          defaultValue = {chardata.c_class}
+                        />
+                      </Grid>
+                      <Grid item xs={2}>
+                        <TextField
+                          variant="outlined"
+                          margin="normal"
+                          required
+                          fullWidth
+                          id="level"
+                          label="Level"
+                          name="level"
+                          type = "number"
+                          defaultValue = {chardata.level}
+                        />
+                      </Grid>
+                      <Grid item xs={2}>
+                        <TextField
+                          variant="outlined"
+                          margin="normal"
+                          required
+                          fullWidth
+                          id="hp"
+                          label="Max Hit Points"
+                          name="hp"
+                          type = "number"
+                          defaultValue = {chardata.hp}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid container spacing={3} direction="row" justify="flex-start">
+                      <Grid item xs={6} sm={1}>
+                        <TextField
+                          variant="outlined"
+                          margin="normal"
+                          required
+                          id="strength"
+                          label="STR"
+                          name="strength"
+                          type = "number"
+                          defaultValue = {chardata.str}
+                        />
+                      </Grid>
+                      <Grid item xs={6} sm={1}>
+                        <TextField
+                          variant="outlined"
+                          margin="normal"
+                          required
+                          id="dexterity"
+                          label="DEX"
+                          name="dexterity"
+                          type = "number"
+                          defaultValue = {chardata.dex}
+                        />
+                      </Grid>
+                      <Grid item xs={6} sm={1}>
+                        <TextField
+                          variant="outlined"
+                          margin="normal"
+                          required
+                          id="constitution"
+                          label="CON"
+                          name="constitution"
+                          type = "number"
+                          defaultValue = {chardata.con}
+                        />
+                      </Grid>
+                      <Grid item xs={6} sm={1}>
+                        <TextField
+                          variant="outlined"
+                          margin="normal"
+                          required
+                          id="intelligence"
+                          label="INT"
+                          name="intelligence"
+                          type = "number"
+                          defaultValue = {chardata.int}
+                        />
+                      </Grid>
+                      <Grid item xs={6} sm={1}>
+                        <TextField
+                          variant="outlined"
+                          margin="normal"
+                          required
+                          id="wisdom"
+                          label="WIS"
+                          name="wisdom"
+                          type = "number"
+                          defaultValue = {chardata.wis}
+                        />
+                      </Grid>
+                      <Grid item xs={6} sm={1}>
+                        <TextField
+                          variant="outlined"
+                          margin="normal"
+                          required
+                          id="charisma"
+                          label="CHA"
+                          name="charisma"
+                          type = "number"
+                          defaultValue = {chardata.cha}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid container spacing={3} direction="row" justify="flex-start">
+                      <Grid item xs={6} sm={2}>
+                        <TextField
+                          variant="outlined"
+                          margin="normal"
+                          required
+                          id="initmod"
+                          label="Initiative Modifier"
+                          name="initmod"
+                          type = "number"
+                          defaultValue = {chardata.initmod}
+                        />
+                      </Grid>
+                      <Grid item xs={6} sm={2}>
+                        <TextField
+                          variant="outlined"
+                          margin="normal"
+                          required
+                          id="ac"
+                          label="AC"
+                          name="ac"
+                          type = "number"
+                          defaultValue = {chardata.ac}
+                        />
+                      </Grid>
+                      <Grid item xs={6} sm={2}>
+                        <TextField
+                          variant="outlined"
+                          margin="normal"
+                          required
+                          id="perception"
+                          label="Passive Perception"
+                          name="perception"
+                          type = "number"
+                          defaultValue = {chardata.perc}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid container spacing={3} direction="row" justify="flex-start">
+                      <Grid item xs={6} sm={2}>
+                        <Button
+                          type="submit"
+                          variant="outlined"
+                          fullWidth
+                          color="default"
+                          className={classes.submit}
+                        >
+                          Update Character
+                        </Button>
+                      </Grid>
+                      <Grid item xs={6} sm={2}>
+                        <Button
+                          href= "/home"
+                          type="button"
+                          variant="outlined"
+                          color="default"
+                          className={classes.submit}
+                        >
+                          Cancel
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </form>
+                </Paper>
+              </Container>
+            <Copyright />
+          </main>
+        </div>
+      );
 }
 
-export { loadCharacters, CharacterList, NewCharacter };
+export { loadCharacters, loadCharacter, CharacterList, NewCharacter, EditCharacter };

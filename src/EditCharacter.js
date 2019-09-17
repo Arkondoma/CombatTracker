@@ -1,28 +1,36 @@
 import React from "react";
-import { NewCharacter } from './FunctionalComponents';
+import { EditCharacter, loadCharacter } from './FunctionalComponents';
 
 class CharacterEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
+      loading: true,
       history: props.history,
       documentId: this.props.match.params.character,
     };
   }
 
+  componentDidMount() {
+      loadCharacter(this.state.documentId).then((response) => {
+          this.setState({
+              loading: false,
+              character: response
+          });
+      });
+  }
+
   render()
   {
-    console.log(this.state.documentId);
-
     if (this.state.loading) {
       return (
         <div> Loading </div>
       );
     }
+    console.log("Successfully loaded: ", this.state.character);
     return (
       <div>
-        <NewCharacter history = {this.state.history}/>
+        <EditCharacter history = {this.state.history} chardata = {this.state.character}/>
       </div>
     )
   }
