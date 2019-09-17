@@ -1,5 +1,4 @@
-import React, {useCallback, useContext } from "react";
-import { Redirect } from "react-router-dom";
+import React, {useCallback } from "react";
 import app from "./base";
 import Copyright from './Copyright.js';
 import CssBaseline from '@material-ui/core/CssBaseline';
