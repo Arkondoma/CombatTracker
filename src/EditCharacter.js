@@ -30,7 +30,7 @@ class CharacterEditor extends React.Component {
     console.log("Successfully loaded: ", this.state.character);
     return (
       <div>
-        <EditCharacter history = {this.state.history} chardata = {this.state.character}/>
+        <EditCharacter history = {this.state.history} chardata = {this.state.character} docId = {this.state.documentId} />
       </div>
     )
   }

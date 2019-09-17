@@ -434,7 +434,7 @@ async function loadCharacter(character) {
     }
 }
 
-function EditCharacter({ history, chardata }) {
+function EditCharacter({ history, chardata, docId }) {
     const classes = useStyles();
 
     const UpdateCharacter = useCallback(async event => {
@@ -443,9 +443,10 @@ function EditCharacter({ history, chardata }) {
                 strength, dexterity, constitution, intelligence, wisdom, charisma, 
                 initmod, ac, perception } = event.target.elements;
         try {
+          if (window.confirm('Are you sure you want to modify this character?')) {
           await app.auth()   
           const userId = app.auth().currentUser.uid;     
-          database.collection("characters").add({
+          database.collection("characters").doc(docId).set({
             userId: userId,
             name: name.value,
             c_class: c_class.value,
@@ -462,6 +463,7 @@ function EditCharacter({ history, chardata }) {
             perc: perception.value
           })
           history.push("/home");
+        }
         } catch(error) {
           alert(error);
         }
