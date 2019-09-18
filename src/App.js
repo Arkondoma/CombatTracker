@@ -8,6 +8,7 @@ import SignUp from "./SignUp";
 import PrivateRoute from "./PrivateRoute";
 import EditCharacter from "./EditCharacter";
 import NewCharacter from "./CharacterEditor";
+import Host from "./Host";
 
 class App extends React.Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class App extends React.Component {
             <PrivateRoute path="/home" component = {Home} />
             <PrivateRoute path="/newcharacter" component = {NewCharacter} />
             <PrivateRoute path="/character/:character" component = {EditCharacter} />
+            <PrivateRoute path="/host/:room" component = {Host} />
             <Route path="/login" component = {Login} />
             <Route path="/signup" component = {SignUp} />
           </div>

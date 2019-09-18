@@ -5,16 +5,19 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import HostIcon from '@material-ui/icons/People';
+import { Link } from 'react-router-dom';
 
 export const mainListItems = (
   <div>
     <ListSubheader inset> Session Options </ListSubheader>
-    <ListItem button>
-      <ListItemIcon>
-        <HostIcon />
-      </ListItemIcon>
-      <ListItemText primary="Host Session" />
-    </ListItem>
+    <Link to="/host/temp" style={{color: 'black', textDecoration: 'none'}}>
+      <ListItem button>
+        <ListItemIcon>
+          <HostIcon />
+        </ListItemIcon>
+        <ListItemText primary="Host Session" />
+      </ListItem>
+    </Link>
     <ListItem button>
       <ListItemIcon>
         <HostIcon />
