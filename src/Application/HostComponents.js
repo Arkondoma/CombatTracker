@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import { socket } from "./header.js";
+import React from "react";
 import app from "./base";
 import Copyright from './Copyright.js';
 import CssBaseline from '@material-ui/core/CssBaseline';

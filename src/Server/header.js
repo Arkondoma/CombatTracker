@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
-import socketIOCLient from "socket.io-client";
+import socketIOClient from "socket.io-client";
 
 var socket;
 
@@ -8,9 +7,9 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            endpoint: 'http://localhost:3001/'
+            endpoint: 'http://localhost:3000/'
         };
-        socket = socketIOCLient(this.state.endpoint);
+        socket = socketIOClient(this.state.endpoint);
     }
 
     render() {

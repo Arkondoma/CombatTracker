@@ -1,34 +1,33 @@
 import React from "react";
-import { socket } from "./header.js";
 import { HostPage } from "./HostComponents";
+import openSocket from "socket.io-client";
+
+var socket = openSocket('http://localhost:4000');
 
 class Host extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        loading: false,
+        loading: true,
         characters: [],
         initiative: []
       };
     }
     
-    getData = charStats => {
-      console.log(charStats);
-      this.setState({characters: charStats });
-    };
-
-    changeData = () => socket.emit("something for some reason");
+    createRoom() {
+      console.log("Local room created");
+    }
   
     componentDidMount() {
       var state_current = this;
-      socket.emit("why do these exist");
-      socket.on("get_data", this.getData);
-      socket.on("change_data", this.changeData);
+      //socket.emit("why do these exist");
+      socket.on("create_room", this.createRoom);
+      this.setState({loading: false});
+      console.log("Page loaded");
     }
 
     componentWillUnmount() {
-      socket.off("get_data");
-      socket.off("change_data");
+      //socket.off("create_room");
     }
   
     render() {
@@ -36,7 +35,7 @@ class Host extends React.Component {
         return (
           <div> 
               Loading 
-              </div>
+          </div>
         );
       }
       return (
