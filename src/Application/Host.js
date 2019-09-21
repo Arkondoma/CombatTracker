@@ -1,8 +1,9 @@
 import React from "react";
 import { HostPage } from "./HostComponents";
-import openSocket from "socket.io-client";
+const shortid = require("shortid");
 
-var socket = openSocket('http://localhost:4000');
+const io = require('socket.io-client');
+var socket;
 
 class Host extends React.Component {
     constructor(props) {
@@ -10,20 +11,20 @@ class Host extends React.Component {
       this.state = {
         loading: true,
         characters: [],
-        initiative: []
-      };
-    }
-    
-    createRoom() {
-      console.log("Local room created");
+        initiative: [],
+        room: shortid.generate(),
+      }; 
+      socket = io.connect('http://localhost:4000');
+      console.log('room code: ', this.state.room);
+      socket.emit('create', this.state.room);
     }
   
     componentDidMount() {
       var state_current = this;
-      //socket.emit("why do these exist");
-      socket.on("create_room", this.createRoom);
-      this.setState({loading: false});
-      console.log("Page loaded");
+      this.setState({
+        loading: false,
+      });
+      console.log("Page loaded, room code: ", this.state.room);
     }
 
     componentWillUnmount() {

@@ -12,8 +12,9 @@ const io = socketIo(server);
 io.on("connection", socket => {
     console.log("Somebody connected somehow");
 
-    socket.on("create_room", () => {
-        console.log("Remote room created");
+    socket.on('create', function(room) {
+        console.log('Room code: ', room);
+        socket.join(room);
     })
 
     socket.on("disconnect", () => console.log("They're gone now"));

@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 export const mainListItems = (
   <div>
     <ListSubheader inset> Session Options </ListSubheader>
-    <Link to="/host/temp" style={{color: 'black', textDecoration: 'none'}}>
+    <Link to="/host/" style={{color: 'black', textDecoration: 'none'}}>
       <ListItem button>
         <ListItemIcon>
           <HostIcon />

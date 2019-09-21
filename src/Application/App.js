@@ -29,7 +29,7 @@ class App extends React.Component {
             <PrivateRoute path="/home" component = {Home} />
             <PrivateRoute path="/newcharacter" component = {NewCharacter} />
             <PrivateRoute path="/character/:character" component = {EditCharacter} />
-            <PrivateRoute path="/host/:room" component = {Host} />
+            <PrivateRoute path="/host/" component = {Host} />
             <Route path="/login" component = {Login} />
             <Route path="/signup" component = {SignUp} />
           </div>
