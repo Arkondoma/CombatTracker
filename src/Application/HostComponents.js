@@ -12,21 +12,12 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Logo from './assets/LogoWithText.png';
 import HostIcon from '@material-ui/icons/People';
-import EditIcon from '@material-ui/icons/Create';
-import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import { mainListItems } from './listItems';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Title from './Title';
+import { roomCode, listCharacters } from './listItems';
 import useStyles from './Theme';
-import { IconButton } from '@material-ui/core';
 
-function HostPage() {
+function HostPage(props) {
     const classes = useStyles();
     
     return (
@@ -57,8 +48,10 @@ function HostPage() {
             }}
           >
             <div className={classes.toolbar} />
+            <List /> <List /> <List />
+            <List> {roomCode(props.room)} </List>
             <Divider />
-            <List>{mainListItems}</List>
+            <List>{listCharacters}</List>
             <Divider />
           </Drawer>
           <main className = {classes.content}>
@@ -68,40 +61,6 @@ function HostPage() {
                 {/* Character List */}
                 <Grid item xs = {12}>
                   <Paper className = {classes.paper}>
-                  <Title>Characters</Title>
-                    <Table size="small">
-                      <TableHead>
-                        <TableRow>
-                          <TableCell>Name</TableCell>
-                          <TableCell>Class</TableCell>
-                          <TableCell>Level</TableCell>
-                          <TableCell>Hit Points</TableCell>
-                          <TableCell></TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        <TableRow>
-                          <TableCell></TableCell>
-                          <TableCell></TableCell>
-                          <TableCell></TableCell>
-                          <TableCell></TableCell>
-                          <TableCell align='right'>
-                              <IconButton>
-                                <EditIcon/>
-                              </IconButton> 
-                            &nbsp;
-                            <IconButton>
-                              <DeleteIcon color="error"/>
-                            </IconButton> 
-                          </TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                    <div className={classes.seeMore}>
-                      <Link color="primary" visited="primary" to="/newcharacter">
-                        Add new character
-                      </Link>
-                    </div>
                   </Paper>
                 </Grid>
               </Grid>

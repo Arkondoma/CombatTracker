@@ -1,10 +1,11 @@
 import React from 'react';
-import app from "./base";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import HostIcon from '@material-ui/icons/People';
+import PlayerIcon from  '@material-ui/icons/Person';
+import RoomIcon from '@material-ui/icons/Info';
 import { Link } from 'react-router-dom';
 
 export const mainListItems = (
@@ -27,14 +28,28 @@ export const mainListItems = (
   </div>
 );
 
-export const secondaryListItems = (
+export function roomCode(code) {
+  return (
   <div>
-    <ListSubheader inset> Account Options </ListSubheader>
-    <ListItem button onClick={() => app.auth().signOut()}>
+    <ListSubheader inset> Room Code </ListSubheader>
+    <ListItem>
       <ListItemIcon>
-        <HostIcon />
+        <RoomIcon />
       </ListItemIcon>
-      <ListItemText primary = "Sign out" />
+      <ListItemText primary = {code} />
     </ListItem>
   </div>
-);
+  );
+}
+
+export const listCharacters = (
+  <div>
+    <ListSubheader inset> Characters </ListSubheader>
+    <ListItem>
+      <ListItemIcon>
+        <PlayerIcon />
+      </ListItemIcon>
+      <ListItemText primary="placeholder" />
+    </ListItem>
+  </div>
+)

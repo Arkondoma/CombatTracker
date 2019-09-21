@@ -41,7 +41,7 @@ class Host extends React.Component {
       }
       return (
         <div>
-            <HostPage />
+            <HostPage room ={this.state.room}/>
         </div>
       );
     }
