@@ -32,6 +32,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import PlayerIcon from  '@material-ui/icons/Person';
 import RoomIcon from '@material-ui/icons/Info';
+import Radio from '@material-ui/core/Radio';
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 
 const firebase = require("firebase");
 require("firebase/firestore");
@@ -95,6 +98,7 @@ function CharacterList(props) {
   });
 
   return (
+    <form onSubmit= {joinRoom}>
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
@@ -135,7 +139,6 @@ function CharacterList(props) {
             </ListItem>
           </Link>
           <Divider/>
-          <form onSubmit= {joinRoom}>
             <ListItem button type="submit" component="button">
               <ListItemIcon>
                 <HostIcon />
@@ -153,7 +156,6 @@ function CharacterList(props) {
                 type = "text"
               />
             </ListItem>
-          </form>
         </div>
         </List>
         <Divider />
@@ -169,6 +171,7 @@ function CharacterList(props) {
                 <Table size="small">
                   <TableHead>
                     <TableRow>
+                      <TableCell></TableCell>
                       <TableCell>Name</TableCell>
                       <TableCell>Class</TableCell>
                       <TableCell>Level</TableCell>
@@ -179,6 +182,7 @@ function CharacterList(props) {
                   <TableBody>
                     {Array.from(props.characters).map(row => (
                       <TableRow key={row.id}>
+                        <TableCell><Radio/></TableCell>
                         <TableCell>{row.name}</TableCell>
                         <TableCell>{row.c_class}</TableCell>
                         <TableCell>{row.level}</TableCell>
@@ -210,6 +214,7 @@ function CharacterList(props) {
         <Copyright />
       </main>
     </div>
+    </form>
   );
 }
 
