@@ -17,6 +17,14 @@ io.on("connection", socket => {
         socket.join(room);
     })
 
+    socket.on('join', function(room) {
+        console.log('Attempting to join: ', room);
+        console.log(room, " currently has ", io.sockets.clients('room'), " connections");
+        if (io.sockets.clients('room') === 0) {
+            socket.broadcast.to(room).emit("Invalid room code");
+        }
+    })
+
     socket.on("disconnect", () => console.log("They're gone now"));
 });
 

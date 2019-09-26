@@ -16,7 +16,7 @@ import EditIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import { mainListItems } from './listItems';
+import { MainListItems } from './listItems';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -26,10 +26,19 @@ import Title from './Title';
 import useStyles from './Theme';
 import { IconButton } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import PlayerIcon from  '@material-ui/icons/Person';
+import RoomIcon from '@material-ui/icons/Info';
 
 const firebase = require("firebase");
 require("firebase/firestore");
 var database = firebase.firestore();
+
+const io = require('socket.io-client');
+var socket;
 
 // Generate Order Data
 function createData(id, name, c_class, level, hp) {
@@ -72,6 +81,19 @@ function CharacterList(props) {
   const classes = useStyles();
   console.log("Tabled character data: ", props.characters);
 
+  const joinRoom = useCallback(async event => {
+    event.preventDefault();
+    const { room } = event.target.elements;
+    console.log("Searching for room: ", room.value);
+
+    try {
+      socket = io.connect('http://localhost:4000');
+      socket.emit('join', room.value);
+    } catch(error) {
+      alert(error);
+    }
+  });
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -101,7 +123,39 @@ function CharacterList(props) {
       >
         <div className={classes.toolbar} />
         <Divider />
-        <List>{mainListItems}</List>
+        <List>
+        <div>
+          <ListSubheader inset> Session Options </ListSubheader>
+          <Link to="/host/" style={{color: 'black', textDecoration: 'none'}}>
+            <ListItem button>
+              <ListItemIcon>
+                <HostIcon />
+              </ListItemIcon>
+              <ListItemText primary="Host Session" />
+            </ListItem>
+          </Link>
+          <Divider/>
+          <form onSubmit= {joinRoom}>
+            <ListItem button type="submit" component="button">
+              <ListItemIcon>
+                <HostIcon />
+              </ListItemIcon>
+              <ListItemText primary="Join Session" />
+            </ListItem>
+            <ListItem>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                id="room"
+                label="Session"
+                name="room"
+                type = "text"
+              />
+            </ListItem>
+          </form>
+        </div>
+        </List>
         <Divider />
       </Drawer>
       <main className = {classes.content}>

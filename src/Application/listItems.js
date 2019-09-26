@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -7,26 +7,8 @@ import HostIcon from '@material-ui/icons/People';
 import PlayerIcon from  '@material-ui/icons/Person';
 import RoomIcon from '@material-ui/icons/Info';
 import { Link } from 'react-router-dom';
-
-export const mainListItems = (
-  <div>
-    <ListSubheader inset> Session Options </ListSubheader>
-    <Link to="/host/" style={{color: 'black', textDecoration: 'none'}}>
-      <ListItem button>
-        <ListItemIcon>
-          <HostIcon />
-        </ListItemIcon>
-        <ListItemText primary="Host Session" />
-      </ListItem>
-    </Link>
-    <ListItem button>
-      <ListItemIcon>
-        <HostIcon />
-      </ListItemIcon>
-      <ListItemText primary="Join Session" />
-    </ListItem>
-  </div>
-);
+import { TextField } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
 
 export function roomCode(code) {
   return (
