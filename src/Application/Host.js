@@ -25,6 +25,10 @@ class Host extends React.Component {
         loading: false,
       });
       console.log("Page loaded, room code: ", this.state.room);
+
+      socket.on('notification', message => {
+        console.log(message);
+      });
     }
 
     componentWillUnmount() {
